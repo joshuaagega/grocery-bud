@@ -68,6 +68,13 @@ function displayAlert(text, action) {
     alert.classList.remove(`alert-${action}`);
   }, 1000);
 }
+//set back default
+function setBackToDefault(){
+  console.log("set back to default");
+}
 // ****** LOCAL STORAGE **********
+function addToLocalStorage(id, value){
+  console.log("added to local storage");
+}
 
 // ****** SETUP ITEMS **********
