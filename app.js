@@ -18,7 +18,9 @@ let editID = "";
 //submit form
 form.addEventListener('submit', addItem);
 //clear items
-clearBtn.addEventListener('click' , clearItems)
+clearBtn.addEventListener('click', clearItems);
+
+
 // ****** FUNCTIONS **********
 function addItem(e) {
   e.preventDefault();
@@ -30,7 +32,7 @@ function addItem(e) {
     element.classList.add('grocery-item');
     //add id
     const atrr = document.createAttribute('data-id');
-    atrr.value =id;
+    atrr.value = id;
     element.setAttributeNode(atrr);
     element.innerHTML = `<p class="title">${value}</p>
     <div class="btn-container">
@@ -41,6 +43,13 @@ function addItem(e) {
         <i class="fas fa-trash"></i>
       </button>
     </div>`;
+
+    const deleteBtn = element.querySelector('.delete-btn');
+    const editBtn = element.querySelector('.edit-btn');
+
+    deleteBtn.addEventListener('click', deleteItem);
+    editBtn.addEventListener('click', editItem);
+
     //append child
     list.appendChild(element);
     //display alert
@@ -48,7 +57,7 @@ function addItem(e) {
     //show container
     container.classList.add('show-container');
     //add to locsl storage
-    addToLocalStorage(id,value);
+    addToLocalStorage(id, value);
     //set back to default
     setBackToDefault();
   }
@@ -71,27 +80,59 @@ function displayAlert(text, action) {
   }, 1000);
 }
 // clear items
-function clearItems(){
-  const items  = document.querySelectorAll('.grocery-item');
+function clearItems() {
+  const items = document.querySelectorAll('.grocery-item');
 
 
-  if(items.length > 0){
-    items.forEach((item) =>{
+  if (items.length > 0) {
+    items.forEach((item) => {
       list.removeChild(item);
     })
   }
+  container.classList.remove('show-container');
+  displayAlert('empty list', 'danger');
+  setBackToDefault();
+  // localStorage.removeItem('list');
 }
+//delete function
+function deleteItem(e) {
+  const element = e.currentTarget.parentElement.parentElement;
+  const id = element.dataset.id;
+  list.removeChild(element);
+  if (list.children.length === 0) {
+    container.classList.remove('show-container');
+  }
+  displayAlert('item removed', 'danger');
+  setBackToDefault();
 
+  //remove from local storage
+  //removeFromLocalStorage(id);
+
+}
+//edit function
+function editItem(e) {
+  const element = e.currentTarget.parentElement.parentElement;
+
+  //set edit item
+  editElement = e.currentTarget.parentElement.previousElementSibling;
+  grocery.value = editElement.innerHTML;
+  editFlag = true;
+  editID = element.dataset.id;
+  submitBtn.textContent = 'edit';
+}
 //set back default
-function setBackToDefault(){
+function setBackToDefault() {
   grocery.value = '';
-  editFlag =false;
-  editID ="";
+  editFlag = false;
+  editID = "";
   submitBtn.textContent = "submit";
 }
+
 // ****** LOCAL STORAGE **********
-function addToLocalStorage(id, value){
+function addToLocalStorage(id, value) {
   console.log("added to local storage");
 }
+function removeFromLocalStorage(id) {
 
+}
 // ****** SETUP ITEMS **********
