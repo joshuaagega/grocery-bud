@@ -151,7 +151,14 @@ function removeFromLocalStorage(id) {
   localStorage.setItem('list', JSON.stringify(items));
 }
 function editLocalStorage(id, value) {
-  
+  let items = getLocalStorage(); 
+  items = items.map((item)=>{
+    if(item.id == id){
+      item.value = value;
+    }
+    return item;
+  });
+  localStorage.setItem('list', JSON.stringify(items));
  }
 function getLocalStorage() {
   return localStorage.getItem('list') ? JSON.parse
