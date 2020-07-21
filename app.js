@@ -29,7 +29,19 @@ function addItem(e) {
     //add id
     const atrr = document.createAttribute('data-id');
     atrr.value.setAttributeNode(attr);
-    element.innerHTML = ``
+    element.innerHTML = `<p class="title">${value}</p>
+    <div class="btn-container">
+      <button type="button" class="edit-btn">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button type="button" class="delete-btn">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>`;
+    //append child
+    list.appendChild(element);
+    //display alert
+    displayAlert('item added to the list', 'success');
   }
   else if(value  && editFlag ){
     console.log('editing');
