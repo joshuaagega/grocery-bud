@@ -20,15 +20,16 @@ form.addEventListener('submit', addItem)
 // ****** FUNCTIONS **********
 function addItem(e) {
   e.preventDefault();
-  const value = grocery.value; 
+  const value = grocery.value;
   const id = new Date().getTime().toString();
-  if(value  && !editFlag){
-    const element  = document.createElement('article');
+  if (value && !editFlag) {
+    const element = document.createElement('article');
     // add class
     element.classList.add('grocery-item');
     //add id
     const atrr = document.createAttribute('data-id');
-    atrr.value.setAttributeNode(attr);
+    atrr.value =id;
+    element.setAttributeNode(atrr);
     element.innerHTML = `<p class="title">${value}</p>
     <div class="btn-container">
       <button type="button" class="edit-btn">
@@ -42,24 +43,30 @@ function addItem(e) {
     list.appendChild(element);
     //display alert
     displayAlert('item added to the list', 'success');
+    //show container
+    container.classList.add('show-container');
+    //add to locsl storage
+    addToLocalStorage(id,value);
+    //set back to default
+    setBackToDefault();
   }
-  else if(value  && editFlag ){
+  else if (value && editFlag) {
     console.log('editing');
   }
-  else{
-    displayAlert('please enter value' , "danger");
+  else {
+    displayAlert('please enter value', "danger");
   }
 }
 //display alert
-function displayAlert(text,action){
+function displayAlert(text, action) {
   alert.textContent = text;
   alert.classList.add(`alert-${action}`);
 
   //remove alert
-  setTimeout(()=>{
+  setTimeout(() => {
     alert.textContent = '';
     alert.classList.remove(`alert-${action}`);
-  },1000);
+  }, 1000);
 }
 // ****** LOCAL STORAGE **********
 
